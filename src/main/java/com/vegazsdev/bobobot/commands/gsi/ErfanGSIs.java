@@ -261,6 +261,8 @@ public class ErfanGSIs extends Command {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.contains("qssi"))
                     line = "QSSI (Qualcomm Generic)";
+                else if (line.contains("mssi"))
+                    line = "MSSI (MediaTek Generic)";
                 else if (line.contains("miatoll"))
                     line = "MiAtoll";
                 else if (line.contains("surya"))
@@ -310,7 +312,7 @@ public class ErfanGSIs extends Command {
         boolean success = false;
 
         StringBuilder fullLogs = new StringBuilder();
-        fullLogs.append("`--> Building GSI...`");
+        fullLogs.append("`==> Building GSI...`");
 
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
@@ -352,7 +354,7 @@ public class ErfanGSIs extends Command {
             }
 
             if (success) {
-                fullLogs.append("\n").append("`--> Compressing GSI...`");
+                fullLogs.append("\n").append("`==> Compressing GSI...`");
                 bot.editMessage(fullLogs.toString(), update, id);
 
                 String[] gzipFiles = listFilesForFolder(new File("ErfanGSIs" + "/output"));
@@ -404,14 +406,14 @@ public class ErfanGSIs extends Command {
                  * Fuck, dummy code...
                  */
                 if (!aonly.toString().trim().equals("")) {
-                    generateLinks.append("[Aonly (NON SAR) Link](https://sourceforge.net/projects/").append(SourceForgeSetup.getSfConf("bot-sf-proj")).append("/files/").append(re).append(aonly).append(")");
+                    generateLinks.append("[Aonly GSI](https://sourceforge.net/projects/").append(SourceForgeSetup.getSfConf("bot-sf-proj")).append("/files/").append(re).append(aonly).append(")");
                 }
 
                 if (!aonly.toString().trim().equals("") && !ab.toString().trim().equals("")) {
                     generateLinks.append(" | ");
                 }
                 if (!ab.toString().trim().equals("")) {
-                    generateLinks.append("[AB (SAR) Link](https://sourceforge.net/projects/").append(SourceForgeSetup.getSfConf("bot-sf-proj")).append("/files/").append(re).append(ab).append(")");
+                    generateLinks.append("[AB GSI](https://sourceforge.net/projects/").append(SourceForgeSetup.getSfConf("bot-sf-proj")).append("/files/").append(re).append(ab).append(")");
                 }
 
                 String descGSI = "" + new FileTools().readFile(infoGSI).trim();
@@ -421,12 +423,14 @@ public class ErfanGSIs extends Command {
                 try {
                     if (Objects.equals(SourceForgeSetup.getSfConf("bot-send-announcement"), "true")) {
                         try {
-                            bot.sendMessage2ID("*" + gsiCmdObj.getGsi() + " GSI*"
-                                    + "\n*Ported From* " + getModelOfOutput() + "\n" + generateLinks
-                                    + "\n\n*File not found?*, try again later\n\n*Information*\n`" + descGSI
-                                    + "`\n\n[Contributers & Credits](https://telegra.ph/Contributers--Credits-12-25)" + "\n\n"
-                                    + "*Like, Share & Subscribe!*" + "\n"
-                                    + "[Channel](https://t.me/nippongsi) | [Group](https://t.me/nippongsi_support)"
+                            bot.sendMessage2ID("*"+ gsiCmdObj.getGsi() + " GSI*"
+                                    + "\n*From* " + getModelOfOutput() + "\n" + generateLinks.toString()
+                                    + "\n\n*File not found?* try later\n\n*Information*\n`" + descGSI
+                                    + "\n\n*Credits:*\n[Erfan Abdi](https://github.com/erfanoabdi)"
+                                    + " | " + "[Nippon](https://github.com/nnippon)"
+                                    + " | " + "[Vega](http://github.com/VegaBobo)"
+                                    + "\n\n" // Sone space here without content
+                                    + "*Join*:\n[Channel](https://t.me/minati_gsi) | [Group](https://t.me/minatigsisupport)"
                                     , Long.parseLong(Objects.requireNonNull(SourceForgeSetup.getSfConf("bot-announcement-id"))));
                         } catch (Exception e) {
                             logger.error("bot-announcement-id looks wrong or not set");
