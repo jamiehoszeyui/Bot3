@@ -387,7 +387,7 @@ public class ErfanGSIs extends Command {
                     logger.error(e.getMessage());
                 }
 
-                fullLogs.append("\n").append("`--> Uploading GSI...`");
+                fullLogs.append("\n").append("`==> Uploading GSI...`");
                 bot.editMessage(fullLogs.toString(), update, id);
 
                 String re = new SourceForgeUpload().uploadGsi(arr, gsiCmdObj.getGsi());
@@ -418,13 +418,13 @@ public class ErfanGSIs extends Command {
 
                 String descGSI = "" + new FileTools().readFile(infoGSI).trim();
 
-                bot.sendReply("Done!", update);
+                bot.sendReply("GSI Sucessfully Created!", update);
 
                 try {
                     if (Objects.equals(SourceForgeSetup.getSfConf("bot-send-announcement"), "true")) {
                         try {
                             bot.sendMessage2ID("*"+ gsiCmdObj.getGsi() + " GSI*"
-                                    + "\n*From* " + getModelOfOutput() + "\n" + generateLinks.toString()
+                                    + "\n*From* " + getModelOfOutput() + "\n" + generateLinks
                                     + "\n\n*File not found?* try later\n\n*Information*\n`" + descGSI
                                     + "\n\n*Credits:*\n[Erfan Abdi](https://github.com/erfanoabdi)"
                                     + " | " + "[Nippon](https://github.com/nnippon)"
